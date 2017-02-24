@@ -1,4 +1,13 @@
 {% extends 'base.html' %}
 {% block content %}
-	<h2>APP1</h2>
+	<div class="row">
+	{% for program in programs %}
+		<div class="col-md-4">
+			<p>{{ program.name }}</p>
+			<p>{{ program.slogan }}</p>
+			<p>{{ program.description }}</p>
+			<p>{{ program.cost }}</p>
+		</div>
+	{% endfor %}
+	</div>
 {% endblock %}
