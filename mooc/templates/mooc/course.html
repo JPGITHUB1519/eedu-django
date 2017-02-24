@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+	<div class="row">
+		<div class="col-md-12">
+			<h1 class="text-center">{{ course.name }}</h1>
+			<p>{{ course.description }}</p>
+			<p>{{ course.slogan }}</p>
+			<p>{{ course.cost }}</p>
+			<p><b>Programs that it courses Belongs</b></p>
+			{% for program in course.programs.all %}
+				<p>{{ program.name }}</p>
+			{% endfor %}
+		</div>
+	</div>
+{% endblock %}

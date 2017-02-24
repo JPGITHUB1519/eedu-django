@@ -15,3 +15,17 @@ class Programs(models.Model):
 
 	def __str__(self):
 		return self.name
+
+class Courses(models.Model):
+	name = models.CharField(max_length=50)
+	description = models.TextField()
+	slogan = models.TextField()
+	cost = models.DecimalField(max_digits=6, decimal_places=2)
+	timeline = models.IntegerField(default=0)
+	released_date = models.DateField(auto_now_add=True)
+	is_active = models.BooleanField(default=True)
+	# many to many relations with Programs
+	programs = models.ManyToManyField(Programs)
+
+	def __str__(self):
+		return self.name
