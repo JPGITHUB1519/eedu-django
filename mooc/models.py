@@ -12,6 +12,7 @@ class Programs(models.Model):
 	is_active = models.BooleanField(default=True)
 	timeline = models.IntegerField(default=0)
 	released_date = models.DateField(auto_now_add=True)
+	skill_level = models.CharField(max_length=50, null=True, choices=[("beginner", "beginner"), ("intermediate", "intermediate"), ("advanced", "advanced")])
 
 	def __str__(self):
 		return self.name
@@ -26,6 +27,7 @@ class Courses(models.Model):
 	is_active = models.BooleanField(default=True)
 	# many to many relations with Programs
 	programs = models.ManyToManyField(Programs)
+	skill_level = models.CharField(max_length=50, null=True, choices=[("beginner", "beginner"), ("intermediate", "intermediate"), ("advanced", "advanced")])
 
 	def __str__(self):
 		return self.name

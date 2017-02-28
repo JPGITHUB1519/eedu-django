@@ -1,8 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic.base import View
 from django.views.generic import ListView, DetailView
+from django.contrib.auth import authenticate, login
 
 from .models import Programs, Courses
+from .forms import UserForm
 
 # Create your views here.
 class IndexView(ListView):
@@ -28,5 +30,36 @@ class CourseView(DetailView):
 	model = Courses
 	template_name = 'mooc/course.html'
 	context_object_name = 'course'
+
+class UserFormView(View):
+	form_class = UserForm
+	template_name = 'mooc/registration_form.html'
+
+	def get(self, request):
+		form = self.form_class(None)
+		return render(request, self.template_name, {'form' : form})
+
+	def post(self, request):
+		form = self.form_class(request.POST)
+		if form.is_valid():
+			user = form.save(commit=False)
+			# cleaned data (normalized)
+			username = form.cleaned_data["username"]
+			password = form.cleaned_data["password"]
+			user.set_password(password)
+			# save on database
+			user.save()
+			# login 
+			# return User Object if credentials are correct
+			user = authenticate(username=username, password=password)
+			if user is not None:
+				# if the user is active
+				if user.is_active:
+					return redirect('mooc:index')
+
+		# if not valid data 
+		return render(request, self.template_name, {'form' : form})
+
+
 
 
