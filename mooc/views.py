@@ -55,6 +55,8 @@ class UserFormView(View):
 			if user is not None:
 				# if the user is active
 				if user.is_active:
+					# login user
+					login(request, user)
 					return redirect('mooc:index')
 
 		# if not valid data 
